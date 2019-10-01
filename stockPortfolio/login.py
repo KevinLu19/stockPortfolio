@@ -5,12 +5,14 @@
 # Purpose: Handles the login portion of the stock project.
 # Modification: - Add portfolio.html function.
 #               - Added Register html function.
+#               - Added Forgotten password html function.
 # ----------------------------------------------------------------------------------------
 
 from flask import render_template, Flask, redirect, url_for, request
 from stockPortfolio import app
 from flask import g
 
+import stockPortfolio.dbconnect
 
 # Handles the incorrect login info.
 @app.errorhandler(405)
@@ -19,7 +21,8 @@ def loginError(error):
 
 @app.route('/profile/')
 def profile():
-    return (render_template("profile.html"))
+    startingUserMoney = 5000
+    return (render_template("profile.html", userMoney=startingUserMoney))
 
 
 @app.route('/')
@@ -31,7 +34,8 @@ def login():
         if (request.method == "POST"):
             attemptUsername = request.form['username']
             attemptPassword = request.form['password']
-
+            
+            # Temporary stuff. Just testing login.
             if (attemptUsername == "admin" and attemptPassword == "password"):
                 return (redirect(url_for('profile')))
             else:
@@ -43,6 +47,7 @@ def login():
         return (render_template("login.html", error=error))
 
 
-@app.route('/login/register/', methods=['GET', 'POST'])
+@app.route('/login/register/')
+@app.route('/register/', methods=['GET', 'POST'])
 def register():
-    pass
+    return (render_template("register.html", title="register"))

@@ -13,3 +13,4 @@ from flask import Flask
 app = Flask(__name__)
 
 import stockPortfolio.login     # Importing login.
+import stockPortfolio.dbconnect # Importing embedded database.

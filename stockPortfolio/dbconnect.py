@@ -2,7 +2,7 @@
 # Author: Kevin Lu
 # Date: 9/30/2019
 # File: dbconnect.py
-# Purpose: Connect to mysql database.
+# Purpose: Sqlite3 allows us to have an embedded database where we can store login credentials.
 # Modification: 
 # ----------------------------------------------------------------------------------------
 
@@ -13,16 +13,8 @@ from flask import g
 import sqlite3
 
 # Database path
-conn = "/path/to/database.db"
-
-# Connecting to database.
-def connection():
-    db = getattr(g, "_database", None)
-
-    if db is None:
-        db = g._database = sqlite3.connect(conn)
-    
-    return (db)
+conn = sqlite3.connect("users.db")
+c = conn.cursor()
 
 # Closing connection to database.
 @app.teardown_appcontext
@@ -33,10 +25,13 @@ def closeConnection(exception):
         db.close()
 
 def createTable():
-    c = connection().cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS users(unid INT(11) AUTO_INCREMENT PRIMARY KEY, username VARCHAR(25), password VARCHAR(25), email VARCHAR(50))")
 
-    table = c.execute('''CREATE TABLE users (unid INT(11) AUTO_INCREMENT PRIMARY KEY,
-                username VARCHAR(25), password VARCHAR(25), email VARCHAR(50)) ''')
+def insertTable(data):
+    insertStatement = "INSERT INTO TABLE {} VALUES()".format('users')
 
-    return (table)
+    c.execute(insertStatement)
+    conn.commit()
 
+    c.close()
+    conn.close()
