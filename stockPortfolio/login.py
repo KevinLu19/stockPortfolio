@@ -3,11 +3,13 @@
 # Date: 9/30/2019
 # File: login.py
 # Purpose: Handles the login portion of the stock project.
-# Modification: N/A
+# Modification: - Add portfolio.html function.
+#               - Added Register html function.
 # ----------------------------------------------------------------------------------------
 
-from flask import render_template, Flask, redirect, url_for, request, flash
+from flask import render_template, Flask, redirect, url_for, request
 from stockPortfolio import app
+from flask import g
 
 
 # Handles the incorrect login info.
@@ -18,6 +20,7 @@ def loginError(error):
 @app.route('/profile/')
 def profile():
     return (render_template("profile.html"))
+
 
 @app.route('/')
 @app.route('/login/', methods=['GET', 'POST'])
@@ -33,16 +36,13 @@ def login():
                 return (redirect(url_for('profile')))
             else:
                 error = "Invalid Credntials. Please try again!"
+                return (redirect(url_for("loginError")))
         return (render_template("login.html", error=error))
     
     except Exception as e:
         return (render_template("login.html", error=error))
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/login/register/', methods=['GET', 'POST'])
 def register():
-    try:
-    
-        pass
-    except Exception as e:
-        return (str(e))
+    pass
