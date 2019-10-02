@@ -8,10 +8,11 @@
 # ----------------------------------------------------------------------------------------
 
 from flask import Flask
+import sqlite3
 
 # Creating an instance for the app.
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///stockPortfolio/users.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///stockPortfolio/users.db" # For SQLAlchemy
 
 import stockPortfolio.login     # Importing login.
 import stockPortfolio.dbconnect # Importing embedded database.

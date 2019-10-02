@@ -9,11 +9,17 @@
 # ----------------------------------------------------------------------------------------
 
 from flask import render_template, Flask, redirect, url_for, request, flash, session, g
-from flask_login import login_user, logout_user, current_user, login_required
+from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from stockPortfolio import app
 
 from passlib.hash import sha256_crypt # Password Hashing. 
-import stockPortfolio.dbconnect       # Database.
+import stockPortfolio.dbconnect as dataBase     # Database.
+import stockPortfolio.users           # Importing Users Class.
+
+# Initialize loginManger to app instance. Need this to make them work together.
+loggingManage = LoginManager()
+loggingManage.init_app(app)
+loggingManage.login_view = 'login'
 
 # Handles the incorrect login info.
 @app.errorhandler(405)
@@ -35,15 +41,22 @@ def login():
         if (request.method == "POST"):
             attemptUsername = request.form['username']
             attemptPassword = request.form['password']
-            
-            
 
-            # Temporary stuff. Just testing login.
-            if (attemptUsername == "admin" and attemptPassword == "password"):
+            dataBase.insertUser(attemptUsername, attemptPassword)
+            users = dataBase.retrieveUsers()
+
+            if (users == dataBase.retrieveUsers()):
                 return (redirect(url_for('profile')))
             else:
-                error = "Invalid Credntials. Please try again!"
-                return (redirect(url_for("loginError")))
+                error = "Invalid Credentials. Please Try Again!"
+                return (redirect(url_for('loginError')))
+
+            # # Temporary stuff. Just testing login.
+            # if (attemptUsername == "admin" and attemptPassword == "password"):
+            #     return (redirect(url_for('profile')))
+            # else:
+            #     error = "Invalid Credntials. Please try again!"
+            #     return (redirect(url_for("loginError")))
         return (render_template("login.html", error=error))
     
     except Exception as e:
@@ -59,8 +72,9 @@ def register():
             password = request.form['passowrd']
             email = request.form['email']
 
-            stockPortfolio.dbconnect.insertTable(user, password, email)
+            stockPortfolio.dbconnect.insertRegistredUser(user, password, email)
             flash("User Registered onto Database.")
+
             return (redirect(url_for('login')))
 
     except Exception as e:

@@ -4,56 +4,54 @@
 # File: dbconnect.py
 # Purpose: Sqlite3 allows us to have an embedded database where we can store login credentials.
 # Modification: - Added Users class to store user login info.
+#               - Moved Creating table on it's own separate file.
 # ----------------------------------------------------------------------------------------
 
-from flask import render_template, Flask, redirect, url_for, request, g
 from stockPortfolio import app
 from flask_sqlalchemy import SQLAlchemy
 
-import sqlite3
+import sqlite3 as sql
 
-
-# Database path
+# Database path & connect to database.
 db = SQLAlchemy(app)
-conn = sqlite3.connect("users.db")
-c = conn.cursor()
 
-class User(db.Model):
-    __tablename__ = "users"
-    id = db.Column('user_id',db.Integer , primary_key=True)
-    username = db.Column('username', db.String(20), unique=True , index=True)
-    password = db.Column('password' , db.String(10))
-    email = db.Column('email',db.String(50),unique=True , index=True)
- 
-    def __init__(self , username ,password , email):
-        self.username = username
-        self.password = password
-        self.email = email
- 
-    def is_authenticated(self):
-        return True
- 
-    def is_active(self):
-        return True
- 
-    def is_anonymous(self):
-        return False
- 
-    def get_id(self):
-        return (self.id)
- 
-    def __repr__(self):
-        return '<User %r>' % (self.username)
+# Used for inserting information when user tries to register for an account.
+def insertRegistredUser(username, password, email):
+    conn = sql.connect("users.db")
+    c = conn.cursor()
 
+    c.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", (username, password, email))
 
-def createTable():
-    c.execute("CREATE TABLE IF NOT EXISTS users(username VARCHAR(25), password VARCHAR(25), email VARCHAR(50))")
-
-def insertTable(username, password, email):
-    insertStatement = "INSERT INTO TABLE {} VALUES({}, {}, {})".format('users', username, password, email)
-
-    c.execute(insertStatement)
     conn.commit()
-
-    c.close()
     conn.close()
+
+# Used for inserting login info.
+def insertUser(username, password):
+    conn = sql.connect("users.db")
+    c = conn.cursor()
+
+    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    conn.commit()
+    conn.close()
+
+def retrieveUsers():
+    conn = sql.connect("users.db")
+    c = conn.cursor()
+
+    c.execute("SELECT username, password FROM users")
+    users = c.fetchall()
+    conn.close()
+
+    return (users)
+
+# # Used for checking if users with same email has already registered.
+# def queryRegisterUser():
+#     conn = sql.connect("users.db")
+#     c = conn.cursor()
+    
+#     c.execute("SELECT username, password, email FROM users")
+#     registeredUser = c.fetchall()
+
+#     conn.close()
+
+#     return (registeredUser)
