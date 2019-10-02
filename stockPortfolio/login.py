@@ -8,11 +8,12 @@
 #               - Added Forgotten password html function.
 # ----------------------------------------------------------------------------------------
 
-from flask import render_template, Flask, redirect, url_for, request
+from flask import render_template, Flask, redirect, url_for, request, flash, session, g
+from flask_login import login_user, logout_user, current_user, login_required
 from stockPortfolio import app
-from flask import g
 
-import stockPortfolio.dbconnect
+from passlib.hash import sha256_crypt # Password Hashing. 
+import stockPortfolio.dbconnect       # Database.
 
 # Handles the incorrect login info.
 @app.errorhandler(405)
@@ -35,6 +36,8 @@ def login():
             attemptUsername = request.form['username']
             attemptPassword = request.form['password']
             
+            
+
             # Temporary stuff. Just testing login.
             if (attemptUsername == "admin" and attemptPassword == "password"):
                 return (redirect(url_for('profile')))
@@ -50,4 +53,16 @@ def login():
 @app.route('/login/register/')
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
-    return (render_template("register.html", title="register"))
+    try:
+        if (request.method == "POST"):
+            user = request.form['username']
+            password = request.form['passowrd']
+            email = request.form['email']
+
+            stockPortfolio.dbconnect.insertTable(user, password, email)
+            flash("User Registered onto Database.")
+            return (redirect(url_for('login')))
+
+    except Exception as e:
+        flash("Error, something went wrong!")
+        return (render_template("register.html", title="register"))

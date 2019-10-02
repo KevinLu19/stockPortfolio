@@ -11,6 +11,7 @@ from flask import Flask
 
 # Creating an instance for the app.
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///stockPortfolio/users.db"
 
 import stockPortfolio.login     # Importing login.
 import stockPortfolio.dbconnect # Importing embedded database.
