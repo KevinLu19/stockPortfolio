@@ -12,9 +12,10 @@ from flask import render_template, Flask, redirect, url_for, request, flash, ses
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
 from stockPortfolio import app
 
-from passlib.hash import sha256_crypt # Password Hashing. 
+from passlib.hash import sha256_crypt           # Password Hashing. 
 import stockPortfolio.dbconnect as dataBase     # Database.
-import stockPortfolio.users           # Importing Users Class.
+import stockPortfolio.users                     # Importing Users Class.
+import stockPortfolio.stockAPI as stock         # Alpha Vantage API.
 
 # Initialize loginManger to app instance. Need this to make them work together.
 # loggingManage = LoginManager()
@@ -26,9 +27,14 @@ import stockPortfolio.users           # Importing Users Class.
 def loginError(error):
     return ("Incorrect Username or Password. Please try again!")
 
-@app.route('/profile/')
+@app.route('/profile/', methods=['GET', 'POST'])
 def profile():
     startingUserMoney = 5000
+
+    if (request.method == "POST"):
+        stockName = request.form['ticker']
+        stockQty = request.form['quantity']
+
     return (render_template("profile.html", money=startingUserMoney))
 
 @app.route('/transaction/')
