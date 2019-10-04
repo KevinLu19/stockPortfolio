@@ -17,9 +17,9 @@ import stockPortfolio.dbconnect as dataBase     # Database.
 import stockPortfolio.users           # Importing Users Class.
 
 # Initialize loginManger to app instance. Need this to make them work together.
-loggingManage = LoginManager()
-loggingManage.init_app(app)
-loggingManage.login_view = 'login'
+# loggingManage = LoginManager()
+# loggingManage.init_app(app)
+# loggingManage.login_view = 'login'
 
 # Handles the incorrect login info.
 @app.errorhandler(405)
@@ -29,8 +29,12 @@ def loginError(error):
 @app.route('/profile/')
 def profile():
     startingUserMoney = 5000
-    return (render_template("profile.html", userMoney=startingUserMoney))
+    return (render_template("profile.html", money=startingUserMoney))
 
+@app.route('/transaction/')
+def transaction():
+
+    return (render_template("transaction.html"))
 
 @app.route('/')
 @app.route('/login/', methods=['GET', 'POST'])
@@ -63,7 +67,8 @@ def login():
         return (render_template("login.html", error=error))
 
 
-@app.route('/login/register/')
+@app.route('/login/register/', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     try:

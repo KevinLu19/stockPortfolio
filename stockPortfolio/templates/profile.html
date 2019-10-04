@@ -8,8 +8,10 @@
 
 {% extends "index.html" %}
 
-{% block login %} 
+{% block portfolio %} 
 
-    <h1> Portfolio {{ userMoney }} </h1>
+  <div class="profile">
+    <h1>Portfolio (${{ money }})</h1>
+  </div>
 
-{% endblock login%}
+{% endblock portfolio%}

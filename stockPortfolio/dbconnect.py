@@ -13,34 +13,33 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlite3 as sql
 
 # Database path & connect to database.
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 # Used for inserting information when user tries to register for an account.
 def insertRegistredUser(username, password, email):
-    conn = sql.connect("users.db")
-    c = conn.cursor()
+    con = sql.connect("users.db")
+    cur = con.cursor()
 
-    c.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", (username, password, email))
-
-    conn.commit()
-    conn.close()
+    cur.execute("INSERT INTO users (username,password,email) VALUES (?,?,?)", (username,password,email))
+    con.commit()
+    con.close()
 
 # Used for inserting login info.
 def insertUser(username, password):
-    conn = sql.connect("users.db")
-    c = conn.cursor()
+    con = sql.connect("users.db")
+    cur = con.cursor()
 
-    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-    conn.commit()
-    conn.close()
+    cur.execute("INSERT INTO users (username,password) VALUES (?,?)", (username,password))
+    con.commit()
+    con.close()
 
 def retrieveUsers():
-    conn = sql.connect("users.db")
-    c = conn.cursor()
+    con = sql.connect("users.db")
+    cur = con.cursor()
+    cur.execute("SELECT username, password FROM users")
+    users = cur.fetchall()
 
-    c.execute("SELECT username, password FROM users")
-    users = c.fetchall()
-    conn.close()
+    con.close()
 
     return (users)
 
