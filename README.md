@@ -17,17 +17,17 @@ Creating a full stack website where we let users log in and they are able to buy
  * API (Alpha Vantage API)- Link: https://www.alphavantage.co/documentation/
  * Modules and how to install them using PiPy: 
     * SQLite3  
-        -Linux : python3 -m pip install sqlite3 (sqlite3 should come pre-installed with Python)
+        -Linux : python3 -m pip install sqlite3 (sqlite3 should come pre-installed with Python)\
         -Windows: pip install sqlite3
     * Flask
-        -Linux: python3 -m pip install flask 
+        -Linux: python3 -m pip install flask\
         -Windows: pip install flask
     * alpha_vantage (API)
-        -Linux: python3 -m pip install alpha_vantage 
+        -Linux: python3 -m pip install alpha_vantage\
         -Windows: pip install alpha_vantage
     * SQLAlchemy 
-        -Linux: python3 -m pip install sqlalchemy
+        -Linux: python3 -m pip install sqlalchemy\
         -Windows: pip install sqlachemy
     * Passlib (For password hashing)
-        -Linux: python3 -m pip install passlib
+        -Linux: python3 -m pip install passlib\
         -Windows: pip install passlib 
