@@ -1,7 +1,7 @@
 # Fullstack Assessment - Stock portfolio
 
 ## What this project is about
-Creating a full stack webstie where we let users log in and they are able to buy assets (for this project, an asset can be bought or sold like a house) with fluctuating prices throughout the day.
+Creating a full stack website where we let users log in and they are able to buy assets (for this project, an asset can be bought or sold like a house) with fluctuating prices throughout the day.
 
 - The goal for this project is to allow users to buy numbers of shares if they have enough cash. 
 - Asset prices are incidated via red, green, or grey color. Red indicates "Current price is less than day's opening price". 
@@ -15,3 +15,18 @@ Creating a full stack webstie where we let users log in and they are able to buy
  * Sqlite3 
  * HTML, CSS, Bootstrap
  * API (Alpha Vantage API)- Link: https://www.alphavantage.co/documentation/
+ * Modules and how to install them using PiPy: 
+    - SQLite3  
+        Linux : python3 -m pip install sqlite3 (sqlite3 should come pre-installed with Python)
+    - Flask
+        Linux: python3 -m pip install flask 
+        Windows: pip install flask
+    - alpha_vantage (API)
+        Linux: python3 -m pip install alpha_vantage 
+        Windows: pip install alpha_vantage
+    - SQLAlchemy 
+        Linux: python3 -m pip install sqlalchemy
+        Windows: pip install sqlachemy
+    - Passlib (For password hashing)
+        Linux: python3 -m pip install passlib
+        Windows: pip install passlib 
