@@ -26,7 +26,7 @@ Creating a full stack website where we let users log in and they are able to buy
         -Linux: python3 -m pip install alpha_vantage\
         -Windows: pip install alpha_vantage\
         
-        * Note: alpha_vantage also uses pandas and matplotlib modules.\
+        * Note: alpha_vantage also uses pandas and matplotlib modules.
         
         -Linux: python3 -m pip install pandas\
         -Windows: pip install pandas\
