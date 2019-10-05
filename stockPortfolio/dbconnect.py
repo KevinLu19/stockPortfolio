@@ -7,13 +7,7 @@
 #               - Moved Creating table on it's own separate file.
 # ----------------------------------------------------------------------------------------
 
-from stockPortfolio import app
-from flask_sqlalchemy import SQLAlchemy
-
 import sqlite3 as sql
-
-# Database path & connect to database.
-# db = SQLAlchemy(app)
 
 # Used for inserting information when user tries to register for an account.
 def insertRegistredUser(username, password, email):

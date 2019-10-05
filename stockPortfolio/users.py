@@ -1,7 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-from stockPortfolio import app
-
-db = SQLAlchemy(app)
+from stockPortfolio import db
 
 class User():
     # __tablename__ = "users"
