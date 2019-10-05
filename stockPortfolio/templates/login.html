@@ -15,19 +15,24 @@
         <div class="avatar">
           <img src="{{url_for("static", filename="images.png")}}" alt="Avatar">
         </div>
-            <h2 class="text-center">Login</h2>   
-            <div class="form-group">
-              <input type="text" class="form-control" name="username" placeholder="Username" required="required" value="{{ request.form.username }}">
-            </div>
-        <div class="form-group">
-              <input type="password" class="form-control" name="password" placeholder="Password" required="required" value="{{ request.form.password }}">
-            </div>        
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-            </div>
-        <div class="clearfix">
-              <a href="register" class="register">Register</a>
-          </div>
+            {{ form.hidden_tag() }}
+          
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Login</legend>
+              <div class="form-group">
+                  {{ form.username.label(class="form-control-label") }}
+                  {{ form.username(class="form-control form-control-lg") }}
+              </div>
+
+              <div class="form-group">
+                  {{ form.password.label(class="form-control-label") }}
+                  {{ form.password(class="form-control form-control-lg") }}
+              </div>
+
+            </fieldset>   
+              <div class="form-group">
+                  {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+              </div>
       </form>
     </div>
 

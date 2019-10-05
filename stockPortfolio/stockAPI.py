@@ -6,20 +6,17 @@
 # Modification: - Added function to return today's stock.
 # ----------------------------------------------------------------------------------------
 
-from alpha_vantage.timeseries import TimeSeries
 from datetime import date
+import requests, json, alpha_vantage
 
-# Your key here
-key = 'MQS69ABIP9YWEATW'
-ts = TimeSeries(key)
+API_KEY = 'MQS69ABIP9YWEATW'
 
-todaysDate = date.today()
+# Modulate the request website.
+apiFunction = "GLOBAL_QUOTE"
+symbol = "GOOGL"
+# r = requests.get('https://www.alphavantage.co/query?function={}&symbol={}&apikey={}'.format(apiFunction , symbol, API_KEY))
 
-# aapl, meta = ts.get_daily(symbol='AAPL')
-# print(aapl['2019-09-12'])
-
-
-def retrieveDailyStock(ticker):
-    ticker, meta = ts.get_daily(symbol=ticker)
-
-    return (ticker[todaysDate])
+# if (r.status_code == 200):
+#     # print (r.json())
+#     result = r.json()
+#     print (result)
