@@ -9,6 +9,8 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 # Creating an instance for the app.
 app = Flask(__name__)
@@ -16,6 +18,10 @@ app.config["SECRET_KEY"] = "5f57e339ae37b2ba3a9ae69eebe20cc6f13f649902ff5d8651" 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db" # Embedded database.
 
 db = SQLAlchemy(app)    # Creating an database Instance.
+bcrypt = Bcrypt(app)    # Password hashing
+
+# Handles all the sessions from Login.
+login_manager = LoginManager(app)
 
 # Import modules at the bottom to avoid module circulatization.
 from stockPortfolio import login     # Importing login.

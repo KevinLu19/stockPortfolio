@@ -8,7 +8,8 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from stockPortfolio.models import User
 
 class RegisterationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=5, max=15)])
@@ -17,6 +18,20 @@ class RegisterationForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     
     submit = SubmitField("Sign Up")
+
+    # Check if username already exist in database.
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+
+        if (user):
+            raise (ValidationError("Username has already been taken. Please choose a different one!"))
+    
+    # Check if email already exist in database.
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+
+        if (user):
+            raise (ValidationError("Email has already been taken. Please choose a different one!"))
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=5, max=15)])

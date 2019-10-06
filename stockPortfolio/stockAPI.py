@@ -9,6 +9,7 @@
 from datetime import date
 import requests, json, alpha_vantage
 
+# Key needed to use API. 
 API_KEY = 'MQS69ABIP9YWEATW'
 
 # Modulate the request website.
@@ -27,7 +28,9 @@ def apiRequestData():
         # Looping through nested dictionary to parse out necessary data.
         for data in result:
             for inner in result[data]:
-                print (inner, result[data][inner])
+                if (inner == "05. price"):
+                    price = inner
+                    print (price)
                 
 
 apiRequestData()

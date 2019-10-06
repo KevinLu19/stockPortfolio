@@ -11,11 +11,12 @@
 
 from flask import render_template, Flask, redirect, url_for, request, flash, session, g
 
-from stockPortfolio import app, db                              # Allow routes to use decorator.
+from stockPortfolio import app, db, bcrypt                      # Allow routes to use decorator.
 
-from stockPortfolio.users import User                           # Importing Users Class.
-from passlib.hash import pbkdf2_sha256                          # Password Hashing.
+from stockPortfolio.models import User                           # Importing Users Class.
 from stockPortfolio.forms import RegisterationForm, LoginForm   # Login and Register class functions.
+from stockPortfolio.stockForms import EnteringStock             # Stock class functions.
+from flask_login import login_user, current_user                              # Password Hashing.
 import stockPortfolio.stockAPI as stock                         # Alpha Vantage API.
 
 
@@ -27,6 +28,10 @@ def loginError(error):
 @app.route('/login/profile', methods=['GET', 'POST'])
 @app.route('/profile/', methods=['GET', 'POST'])
 def profile():
+    # If user is not logged in, we don't want them to see profile or transactions at all.
+    if current_user.is_authenticated == False:
+        return redirect(url_for('login'))
+
     startingUserMoney = 5000
     
     if (request.method == "POST"):
@@ -38,36 +43,51 @@ def profile():
 
     return (render_template("profile.html", money=startingUserMoney, title="Profile"))
 
+    # Creating instance of form.
+    # form = EnteringStock()
+
+    # if (form.validate_on_submit()):
+    #     pass
+
 @app.route('/transaction/')
 def transaction():
+    # If user is not logged in, we don't want them to see profile or transactions at all.
+    if current_user.is_authenticated == False:
+        return redirect(url_for('login'))
 
     return (render_template("transaction.html", title="Transactions"))
 
 @app.route('/')
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
+
     form = LoginForm()
 
     if (form.validate_on_submit()):
-        # Temp login.
-        if (form.username.data == "admin" and form.password.data == "admin"):
-            flash("Logging you in!", 'success')
+        user = User.query.filter_by(username=form.username.data).first()
+
+        if (user and bcrypt.check_password_hash(user.password, form.password.data)):
+            login_user(user)
             return (redirect(url_for("profile")))
         else:
-            return (redirect(url_for("loginError")))
-
+            flash ("Login Unsuccessful.", "danger")
+    
     return (render_template("login.html", title="Login", form=form))
 
 @app.route('/login/register/', methods=['GET', 'POST'])
 @app.route('/register/', methods=['GET', 'POST'])
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
 
     form = RegisterationForm()
 
     if (form.validate_on_submit()):
         # Hashing password immediately to make life easy.
-        passwordHashing = pbkdf2_sha256.__hash__(form.password.data)
+        passwordHashing = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
         # Adding user account onto embedded database.
         user = User(username=form.username.data, password=passwordHashing, email=form.email.data)
@@ -75,6 +95,6 @@ def register():
         db.session.commit()
 
         flash("User Registered onto Database. Please Login!", 'success')
-        return (redirect(url_for('login')))
+        return (redirect(url_for("login")))
 
-    return (render_template("register.html", title="Register Page", form=form))
+    return (render_template("register.html", title="Register", form=form))
