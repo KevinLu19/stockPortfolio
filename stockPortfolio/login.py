@@ -13,10 +13,10 @@ from flask import render_template, Flask, redirect, url_for, request, flash, ses
 
 from stockPortfolio import app, db, bcrypt                      # Allow routes to use decorator.
 
-from stockPortfolio.models import User                           # Importing Users Class.
+from stockPortfolio.models import User                          # Importing Users Class.
 from stockPortfolio.forms import RegisterationForm, LoginForm   # Login and Register class functions.
 from stockPortfolio.stockForms import EnteringStock             # Stock class functions.
-from flask_login import login_user, current_user                              # Password Hashing.
+from flask_login import login_user, current_user, logout_user   # Login manager.
 import stockPortfolio.stockAPI as stock                         # Alpha Vantage API.
 
 
@@ -70,7 +70,7 @@ def login():
 
         if (user and bcrypt.check_password_hash(user.password, form.password.data)):
             login_user(user)
-            return (redirect(url_for("profile")))
+            redirect(url_for('profile'))
         else:
             flash ("Login Unsuccessful.", "danger")
     
@@ -98,3 +98,9 @@ def register():
         return (redirect(url_for("login")))
 
     return (render_template("register.html", title="Register", form=form))
+
+@app.route("/logout/")
+def logout():
+    logout_user()
+
+    return redirect(url_for("login"))
