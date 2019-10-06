@@ -19,5 +19,5 @@ db = SQLAlchemy(app)    # Creating an database Instance.
 
 # Import modules at the bottom to avoid module circulatization.
 from stockPortfolio import login     # Importing login.
-from stockPortfolio import dbconnect # Importing embedded database.
 from stockPortfolio import stockAPI  # Importing alpha_Vantage api.
+from stockPortfolio import forms     # Importing forms (login and register)

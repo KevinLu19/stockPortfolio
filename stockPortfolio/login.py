@@ -11,13 +11,13 @@
 
 from flask import render_template, Flask, redirect, url_for, request, flash, session, g
 
-from stockPortfolio import app, db                  # Allow routes to use decorator.
+from stockPortfolio import app, db                              # Allow routes to use decorator.
 
-from passlib.hash import pbkdf2_sha256              # Password Hashing.
-import stockPortfolio.dbconnect as dataBase         # Database.
-from stockPortfolio.users import User               # Importing Users Class.
-import stockPortfolio.stockAPI as stock             # Alpha Vantage API.
-from stockPortfolio.forms import RegisterationForm, LoginForm
+from stockPortfolio.users import User                           # Importing Users Class.
+from passlib.hash import pbkdf2_sha256                          # Password Hashing.
+from stockPortfolio.forms import RegisterationForm, LoginForm   # Login and Register class functions.
+import stockPortfolio.stockAPI as stock                         # Alpha Vantage API.
+
 
 # Handles the incorrect login info.
 @app.errorhandler(405)
@@ -64,6 +64,7 @@ def login():
 def register():
 
     form = RegisterationForm()
+
     if (form.validate_on_submit()):
         # Hashing password immediately to make life easy.
         passwordHashing = pbkdf2_sha256.__hash__(form.password.data)
@@ -74,6 +75,6 @@ def register():
         db.session.commit()
 
         flash("User Registered onto Database. Please Login!", 'success')
-        return (redirect(url_for("login")))
+        return (redirect(url_for('login')))
 
     return (render_template("register.html", title="Register Page", form=form))
