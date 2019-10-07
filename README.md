@@ -8,6 +8,7 @@ Creating a full stack website where we let users log in and they are able to buy
   Green indicates "Current price si greater than the days' opening price.
   Gray indicated "Current price is equal to day's open price."
  
+## NOTE: The api function call CURRENTLY DOES NOT WORK. ** Only the Login, Register, and database for those two works!
 
 ## Resourced Used for this project
  * Python version 3.6.8
@@ -34,6 +35,12 @@ Creating a full stack website where we let users log in and they are able to buy
     * SQLAlchemy\
         -Linux: python3 -m pip install sqlalchemy\
         -Windows: pip install sqlachemy
-    * Passlib (For password hashing)\
-        -Linux: python3 -m pip install passlib\
-        -Windows: pip install passlib 
+    * Bcrypt (For password hashing)\
+        -Linux: python3 -m pip install flask-bcrypt\
+        -Windows: pip install flask-bcrypt 
+        
+ ## Images
+ ![alt text](https://imgur.com/UvEqpWf)
+ ![alt text](https://imgur.com/tVepBMv)
+ ![alt text](https://imgur.com/RMUu6sm)
+ ![alt text](https://imgur.com/8B3akKL)
