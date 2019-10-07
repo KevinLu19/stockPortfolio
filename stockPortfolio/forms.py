@@ -3,11 +3,11 @@
 # Date: 10/5/2019
 # File: forms.py
 # Purpose: Creating python version of Login and Register html using WTForms and python classes.
-# Modification: N/A
+# Modification: - Added LoginForm
 # ----------------------------------------------------------------------------------------
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from stockPortfolio.models import User
 

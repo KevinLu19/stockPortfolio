@@ -15,9 +15,9 @@ from stockPortfolio import app, db, bcrypt                      # Allow routes t
 
 from stockPortfolio.models import User                          # Importing Users Class.
 from stockPortfolio.forms import RegisterationForm, LoginForm   # Login and Register class functions.
-from stockPortfolio.stockForms import EnteringStock             # Stock class functions.
 from flask_login import login_user, current_user, logout_user   # Login manager.
 import stockPortfolio.stockAPI as stock                         # Alpha Vantage API.
+
 
 
 # Handles the incorrect login info.
@@ -33,21 +33,24 @@ def profile():
         return redirect(url_for('login'))
 
     startingUserMoney = 5000
+    userProfit = 0      # User starts their profit at 0. 
     
     if (request.method == "POST"):
         stockName = request.form['ticker']
         stockQty = request.form['quantity']
 
-        tickerContainer = []
-        stock.retrieveDailyStock(stockName)
+        stockShares = stockQty
+        copmanyName = stockName
+        
+        stockPrice = stock.apiRequestData(stockName, stockShares)
+
+        # Getting errors here.
+        # totalSharesAmount = stockPrice
+
+        # return totalSharesAmount
+        return (render_template("profile.html", money=startingUserMoney, title="Profile"))
 
     return (render_template("profile.html", money=startingUserMoney, title="Profile"))
-
-    # Creating instance of form.
-    # form = EnteringStock()
-
-    # if (form.validate_on_submit()):
-    #     pass
 
 @app.route('/transaction/')
 def transaction():

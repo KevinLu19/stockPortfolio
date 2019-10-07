@@ -14,9 +14,15 @@ API_KEY = 'MQS69ABIP9YWEATW'
 
 # Modulate the request website.
 apiFunction = "GLOBAL_QUOTE"
-symbol = "GOOGL"
+# symbol = "GOOGL"
 
-def apiRequestData():
+# Storing keys so we can access them.
+stockOpen = "02. open"
+stockHigh = "03. high"
+stockLow = "04. low"
+stockPrice = "05. price"
+
+def apiRequestData(symbol, sharesQty):
     r = requests.get('https://www.alphavantage.co/query?function={}&symbol={}&apikey={}'.format(apiFunction , symbol, API_KEY))
 
     if (r.status_code == 200):
@@ -24,13 +30,15 @@ def apiRequestData():
         result = r.json()
 
         #print (result)
-        
+
         # Looping through nested dictionary to parse out necessary data.
         for data in result:
             for inner in result[data]:
-                if (inner == "05. price"):
+                if (inner == stockPrice):
                     price = inner
-                    print (price)
-                
+                    sharesPrice = result[data][price]
+                    totalSharesCost = float(sharesQty) * float(sharesPrice)
 
-apiRequestData()
+                    return totalSharesCost
+
+#apiRequestData("GOOGL", 2)

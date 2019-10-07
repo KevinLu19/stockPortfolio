@@ -14,13 +14,18 @@
       <h1> Transactions </h1>
     </div>
 
-    <div class="stocksReceipt"> 
-    <ul>
-      {% for item in stockTicker %}    
-        <li>{{ item }}</li>
-      {% endfor %}
-      <li>{{ companyName }} - {{ numberOfShares }} Shares -> ${{ costOfTotalShares }}</li>
-    </ul>
-  </div>
+    <main role="main" class="container">
+      <div class="content-section">
+        <div class="form-group"> 
+          <ul>
+            {% for item in stockTicker %}    
+              <li>{{ item }}</li>
+            {% endfor %}
+            <li>{{ companyName }} - {{ numberOfShares }} Shares -> ${{ costOfTotalShares }}</li>
+          </ul>
+        </div>
+      </div>
+    
+    </main>
 
 {% endblock transaction %}
