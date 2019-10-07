@@ -39,8 +39,8 @@ Creating a full stack website where we let users log in and they are able to buy
         -Linux: python3 -m pip install flask-bcrypt\
         -Windows: pip install flask-bcrypt 
         
- ## Images
- ![alt text](https://imgur.com/UvEqpWf)
- ![alt text](https://imgur.com/tVepBMv)
- ![alt text](https://imgur.com/RMUu6sm)
- ![alt text](https://imgur.com/8B3akKL)
+ ## Images of current progress
+ ![LogIn](https://raw.githubusercontent.com/KevinLu19/stockPortfolio/master/screenshots/login.png)
+ ![Register](https://raw.githubusercontent.com/KevinLu19/stockPortfolio/master/screenshots/register.png)
+ ![Profile](https://raw.githubusercontent.com/KevinLu19/stockPortfolio/master/screenshots/profile.png)
+ ![Transaction](https://raw.githubusercontent.com/KevinLu19/stockPortfolio/master/screenshots/transactions.png)
