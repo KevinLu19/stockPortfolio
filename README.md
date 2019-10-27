@@ -10,6 +10,8 @@ Creating a full stack website where we let users log in and they are able to buy
  
 ## NOTE: The api function call CURRENTLY DOES NOT WORK. ** Only the Login, Register, and database for those two works!
 
+Deployable Link: https://fullstack-stockportfolio.herokuapp.com/
+
 ## Resourced Used for this project
  * Python version 3.6.8
  * Flask (Python Framework)
