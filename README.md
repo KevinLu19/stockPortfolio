@@ -12,6 +12,9 @@ Creating a full stack website where we let users log in and they are able to buy
 
 Deployable Link: https://fullstack-stockportfolio.herokuapp.com/
 
+LOGIN IS REQUIRED IN ORDER TO HAVE ACCESS TO PROFILE AND TRANSACTION:
+  Without an account, the webite will bounce you back to the loging page. So make sure to register for an account if you do not have an account.
+
 ## Resourced Used for this project
  * Python version 3.6.8
  * Flask (Python Framework)
